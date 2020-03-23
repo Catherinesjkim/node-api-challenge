@@ -20,11 +20,11 @@ server.use(addName);
 
 server.get('/', addName, (req, res) => {
   const nameInsert = (req.name) ? `${req.name}` : '';
-  consoleg.log('req.name is:', req.name);
+  console.log('req.name is:', req.name);
   res.send(`
     <h2>Catherine's Sprint Challenge API!</h2>
     <p>Welcome: ${nameInsert}, to the Catherine's Sprint API</p>
-  `);
+  `); // Worked on postman
 });
 
 function addName(req, res, next) {
