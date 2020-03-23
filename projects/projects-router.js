@@ -23,7 +23,8 @@ router.get('/', (req, res) => {
 // get(): resolves to an array of all the resources contained in the db. If you pass an id to this method it will return the resource with that id if one is found.
 router.get('/:id', validateProjectId, (req, res) => {
   const { id } = req.params;
-  Projects.get(id).then(project => {
+  Projects.get(id)
+    .then(project => {
     res.status(200).json(project); // worked on postman
   });
 });
@@ -41,14 +42,15 @@ router.post("/", validateProject, (req, res) => {
 });
 
 // update(): accepts two arguments, the first is the id of the resource to update, and the second is an obj with the changes to apply. It returns the updated resource. If a resource with the provided id is not found, the method returns null. "name" & "description"
-router.put('/:id', validateProjectId, validateProject, (req, res) => {
-  const { id } = req.params
+router.put("/:id", validateProjectId, validateProject, (req, res) => {
+  // axios.post(/api/actions, data) <-- the data shows up as the req.//body on the server
+  const { id } = req.params;
+  // validate that the actionInfo is correct before saving
+  Projects.update(id, req.body).then(project => {
+    res.status(200).json({ success: "Info Updated!", info: req.body }); //  worked on postman
+  });
+});
 
-  Projects.update(id, req.body)
-    .then(project => {
-      res.status(200).json({ success: 'Info Updated!', info: req.body }) // Worked on postman
-    })
-}) // checking 404 error message
 
 // remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
 router.delete("/:id", validateProjectId, (req, res) => {
@@ -64,7 +66,7 @@ router.delete("/:id", validateProjectId, (req, res) => {
               ? res.status(200).json({ success: `The Project ${id} was deleted!`, info: project }) : null
           })
         : null
-    });
+    }); // worked on postman
 });
 // 
 
@@ -73,12 +75,11 @@ router.delete("/:id", validateProjectId, (req, res) => {
 // The projectModel.js helper includes an extra method called getProjectActions() that takes a project id as it's only argument and returns a list of all the actions for the project. 
 router.get("/:id/actions", validateProjectId, (req, res) => {
   const { id } = req.params;
-
   Projects.getProjectActions(id)
     .then(data => {
       data ? res.status(200).json(data) : null
     }) // 
-}); // if empty, return error message
+}); // worked on postman
 
 // If you try to add an action with an id of 3 and there is no project with that id the database will return an error.
 // Make a new action on a project's id
@@ -95,10 +96,10 @@ router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
         project_id,
       };
       Actions.insert(newAction).then(action => {
-        res.status(201).json({ success: action }); //
-      });
+        res.status(201).json({ success: action }); // only post gets 201 - create
+      }); // worked on postman
     }
   });
-});
+}); 
 
 module.exports = router;

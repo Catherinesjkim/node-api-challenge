@@ -46,7 +46,7 @@ function update(id, changes) {
     .where("id", id)
     .update(changes)
     .then(count => (count > 0 ? get(id) : null));
-}
+} // error message? 
 
 function remove(id) {
   return db("projects")

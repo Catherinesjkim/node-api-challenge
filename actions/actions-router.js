@@ -16,7 +16,7 @@ const validateAction = mw.validateAction;
 router.get("/", (req, res) => {
   Actions.get()
     .then(action => {
-      res.status(200).json(action); 
+      res.status(200).json(action); // worked on postman
     })
     .catch(err => {
       res.status(500).json({ error: "Sorry, try again!", err });
@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 router.get("/:id", validateActionId, (req, res) => {
   const { id } = req.params
   Actions.get(id).then(action => {
-    res.status(200).json(action); 
+    res.status(200).json(action); // worked on postman
   });
 });
 
@@ -37,7 +37,7 @@ router.put("/:id", validateActionId, validateAction, (req, res) => {
   const { id } = req.params;
   // validate that the actionInfo is correct before saving
   Actions.update(id, req.body).then(action => {
-    res.status(201).json({ success: 'Info Created & Updated!', info: req.body }); // 201 = Created
+    res.status(200).json({ success: 'Info Updated!', info: req.body }); // worked on postman
   }); 
 });
 
@@ -52,7 +52,7 @@ router.delete("/:id", validateActionId, (req, res) => {
       })
       : null
   }); // Else if - 2 nulls
-});
+}); // worked on postman
 
 
 module.exports = router;
