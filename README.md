@@ -16,12 +16,12 @@ The Minimum Viable Product must be completed in three hours.
 
 Follow these steps to set up and work on your project:
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your _Team Lead_ as collaborator on Github.
-- [ ] Clone your forked version of the Repository.
-- [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
-- [ ] Implement the project on this Branch, committing changes regularly.
-- [ ] Push commits: git push origin `firstName-lastName`.
+- [X] Create a forked copy of this project.
+- [X] Add your _Team Lead_ as collaborator on Github.
+- [X] Clone your forked version of the Repository.
+- [X] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
+- [X] Implement the project on this Branch, committing changes regularly.
+- [X] Push commits: git push origin `firstName-lastName`.
 
 Follow these steps for completing your project.
 
@@ -38,20 +38,32 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your Team Lead.
 
-- [ ] Mention two parts of Express that you learned about this week.
+- [X] Mention two parts of Express that you learned about this week.
 
-- [ ] Describe Middleware?
+  1. Middleware: we can use Express mw to add features to Express including the route handlers. It allows you to define routes of your application based on HTTP methods and URLs. It's the biggest feature of Express.
 
-- [ ] Describe a Resource?
+  2. Requests: It's like the track that moves equipments in the assembly line. Req will go to a series of mw and each mw has an imaginary button called "next" and sends a req to the next mw: "go answer to the client with a response." M1: Registration auth toke? If not, send it back to the registration page. M2: Login auth token? If not, send it back to the registration page.
 
-- [ ] What can the API return to help clients know if a request was successful?
+- [X] Describe Middleware? 
 
-- [ ] How can we partition our application into sub-applications?
+  It's a set of functions that extends software similar to reouter handler. It's used to add features to express. It's the biggest feature of Express. Most code we write, including route handlers, is middleware. It can be considered as an array of functions that get executed in the order the are introduced into the server code. There are thousands of them. i.e. Morgan is a logger mw that let's the developers know who is using the API. CORS is a cross-site communications mw. Helmet is a security piece for login.  
+
+- [X] Describe a Resource? 
+
+  To talk about a resource, we need to talk about the RESTful API. REST APIs are resource-based interfaces. On the web, this means that the data resources (typically formatted in JSON or XML) are represented by URIs (paths) accessed via HTTP. Actions such as CREATE, READ, UPDATE and DELETE (CRUB) are made against three resources using HTTP methods (POST, GET, PUT/PATCH, & DELETE). The most common mw functionality needed are error messaging, db interaction, getting info from static files or other resources. 
+
+- [X] What can the API return to help clients know if a request was successful?
+
+  200 to 299 HTTP status codes. i.e.: 200: Ok, the request was successful. 201: Created, a new resource obj was successfully created. 
+
+- [X] How can we partition our application into sub-applications?
+
+   Express Router breaks up a server into sub components. Routes and Routers allow us to import and export different parts of our application. Routers are like Routes and Components mixed togehter in React. 
 
 ## Minimum Viable Product
 
-- [ ] Configure an _npm script_ named _"server"_ that will execute your code using _nodemon_. Make _nodemon_ be a development time dependency only, it shouldn't be deployed to production.
-- [ ] Configure an _npm script_ named _"start"_ that will execute your code using _node_.
+- [X] Configure an _npm script_ named _"server"_ that will execute your code using _nodemon_. Make _nodemon_ be a development time dependency only, it shouldn't be deployed to production.
+- [X] Configure an _npm script_ named _"start"_ that will execute your code using _node_.
 
 Design and build the necessary endpoints to:
 
