@@ -18,12 +18,19 @@ server.use('/api/actions', logger, actionsRouter);
 // write a GET / endpoint that returns an obj
 server.use(addName);
 
+server.use(express.json());
+
+server.get("/api", (req, res) => {
+  const environment = process.env;
+  res.status(200).json({ api: "up", environment });
+});
+
 server.get('/', addName, (req, res) => {
   const nameInsert = (req.name) ? `${req.name}` : '';
   console.log('req.name is:', req.name);
   res.send(`
     <h2>Catherine's Sprint Challenge API!</h2>
-    <p>Welcome: ${nameInsert}, to the Catherine's Sprint API</p>
+    <p>Welcome: ${nameInsert} to the Catherine's Sprint API</p>
   `); // Worked on postman
 });
 

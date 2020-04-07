@@ -42,7 +42,7 @@ const validateAction = (req, res, next) => {
   Object.entries(req.body).length === 0 // if the req.body is not there, if we don't add info
     ? res.status(404).json({ message: 'No Action Data' }) // if
     : !description || !notes // else if 
-    ? res.status(400).json({ message: 'Missing required info.Please add the description and notes!' }) // if
+    ? res.status(400).json({ message: 'Missing required info. Please add the description and notes!' }) // if
   : next(); // else
 }
 

@@ -7,8 +7,10 @@ const mw = require('../custom/middleware.js');
 const validateProjectId = mw.validateProjectId;
 const validateProject = mw.validateProject;
 const validateAction = mw.validateAction; 
+const validateActionId = mw.validateActionId;
 
 // add an endpoint that returns all the messages for an project
+// "name" & "description"
 router.get('/', (req, res) => {
   Projects
     .get()
@@ -20,7 +22,7 @@ router.get('/', (req, res) => {
     }); 
 });
 
-// get(): resolves to an array of all the resources contained in the db. If you pass an id to this method it will return the resource with that id if one is found.
+// get(): resolves to an array of all the resources contained in the db. If you pass an id to this method it will return the resource with that id if one is found. "name" & "description"
 router.get('/:id', validateProjectId, (req, res) => {
   const { id } = req.params;
   Projects.get(id)
@@ -40,6 +42,10 @@ router.post("/", validateProject, (req, res) => {
       res.status(500).json({ error: 'Sorry, try again!', err })
     })
 });
+/*
+"name": "Complete Python and Django Challenge",
+"description": "Build an Awesome OOO language app Using Python and Django without semicolons"
+*/
 
 // update(): accepts two arguments, the first is the id of the resource to update, and the second is an obj with the changes to apply. It returns the updated resource. If a resource with the provided id is not found, the method returns null. "name" & "description"
 router.put("/:id", validateProjectId, validateProject, (req, res) => {
@@ -49,10 +55,9 @@ router.put("/:id", validateProjectId, validateProject, (req, res) => {
   Projects.update(id, req.body).then(project => {
     res.status(200).json({ success: "Info Updated!", info: req.body }); //  worked on postman
   });
-});
+}); // 404 Error message workign on postman - validateProject - "No Project Data"
 
-
-// remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
+// remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted. "name" & "description"
 router.delete("/:id", validateProjectId, (req, res) => {
   const { id } = req.params;
   Projects
@@ -68,21 +73,25 @@ router.delete("/:id", validateProjectId, (req, res) => {
         : null
     }); // worked on postman
 });
-// 
+/*
+"name": "Complete Python and Django Challenge",
+"description": "Build an Awesome OOO language app Using Python and Django without semicolons"
+*/
 
 // Retrieve the list of actions for a project.
-// Get the actions attached to the project id. If not, show 404
+// Get the actions attached to the project id. If not, show 404 - worked on postman
 // The projectModel.js helper includes an extra method called getProjectActions() that takes a project id as it's only argument and returns a list of all the actions for the project. 
-router.get("/:id/actions", validateProjectId, (req, res) => {
+router.get("/:id/actions", validateProjectId, validateActionId, (req, res) => {
   const { id } = req.params;
   Projects.getProjectActions(id)
     .then(data => {
       data ? res.status(200).json(data) : null
-    }) // 
-}); // worked on postman
+    }) // worked on postman
+}); // 404 error response worked on postman
 
 // If you try to add an action with an id of 3 and there is no project with that id the database will return an error.
 // Make a new action on a project's id
+// "description" & "notes"
 router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
   const { description, notes } = req.body;
   const project_id = req.params.id;
@@ -98,8 +107,8 @@ router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
       Actions.insert(newAction).then(action => {
         res.status(201).json({ success: action }); // only post gets 201 - create
       }); // worked on postman
-    }
-  });
+    } // 400 error response worked on postman - Add description & notes
+  }); // 404 error response worked on postman - that project doesn't exist
 }); 
 
 module.exports = router;

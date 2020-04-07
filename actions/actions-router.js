@@ -28,7 +28,7 @@ router.get("/:id", validateActionId, (req, res) => {
   const { id } = req.params
   Actions.get(id).then(action => {
     res.status(200).json(action); // worked on postman
-  });
+  }); // 404 worked on postman
 });
 
 // update(): accepts two arguments, the first is the id of the resource to update, and the second is an object with the changes to apply. It returns the updated resource. If a resource with the provided id is not found, the method returns null.
@@ -38,8 +38,8 @@ router.put("/:id", validateActionId, validateAction, (req, res) => {
   // validate that the actionInfo is correct before saving
   Actions.update(id, req.body).then(action => {
     res.status(200).json({ success: 'Info Updated!', info: req.body }); // worked on postman
-  }); 
-});
+  }); // 404 worked on postman - No Action Data
+}); // 400 worked on postman - Add description & notes
 
 // remove(): the remove method accepts an id as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
 router.delete("/:id", validateActionId, (req, res) => {
@@ -48,11 +48,15 @@ router.delete("/:id", validateActionId, (req, res) => {
   Actions.get(id).then(action => {
     action
       ? Actions.remove(id).then(deleted => {
-        deleted ? res.status(200).json({ success: `Project ${id} was deleted!`, info: action }) : null
-      })
-      : null
-  }); // Else if - 2 nulls
-}); // worked on postman
+          deleted
+            ? res
+                .status(200)
+                .json({ success: `Project ${id} was deleted!`, info: action })
+            : null;
+        }) // worked on postman
+      : null;
+  }); // 4040 worked on postman
+}); 
 
 
 module.exports = router;
