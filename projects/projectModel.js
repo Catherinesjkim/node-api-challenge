@@ -1,5 +1,5 @@
-const db = require("../dbConfig.js");
-const mappers = require("./mappers");
+const db = require("../data/dbConfig.js");
+const mappers = require("../data/helpers/mappers");
 
 module.exports = {
   get,
@@ -46,7 +46,7 @@ function update(id, changes) {
     .where("id", id)
     .update(changes)
     .then(count => (count > 0 ? get(id) : null));
-}
+} // error message? 
 
 function remove(id) {
   return db("projects")
